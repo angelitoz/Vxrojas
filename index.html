@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Angel Rojas Avila, filmmaker y fotógrafo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF0F2; --panel:#FFFFFF; --track:#DDE1E6; --text:#1A1F27; --muted:#5B6572; --line:#CBD1D8; --play:#D62C45;
+  --c1:#5CC8BF; --c2:#F0B84D; --c3:#A99CF0; --c4:#F08C9B; --clipink:#101418;
+  --display:"Archivo","Arial Narrow",Arial,sans-serif; --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#1B1F26;--panel:#242933;--track:#2C323D;--text:#E8EAED;--muted:#9AA3AF;--line:#363D49;--play:#FF5468;color-scheme:dark}
+}
+:root[data-theme="dark"]{--bg:#1B1F26;--panel:#242933;--track:#2C323D;--text:#E8EAED;--muted:#9AA3AF;--line:#363D49;--play:#FF5468;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:400 1.0625rem/1.6 var(--body)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--play);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,2.5rem)}
+header{display:flex;justify-content:space-between;align-items:center;gap:.8rem 2rem;padding:1.3rem 0;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+header b{font:800 1.05rem var(--display);font-stretch:110%}
+nav{display:flex;gap:.3rem 1.3rem;flex-wrap:wrap}
+nav a{text-decoration:none;color:var(--muted);font-weight:500;padding:.2rem 0;border-bottom:2px solid transparent}
+nav a:hover{color:var(--text)}
+nav a[aria-current="page"]{color:var(--text);border-color:var(--play)}
+.view{display:none;padding:clamp(2rem,5vw,3.5rem) 0 3rem}
+.view.on{display:block}
+h1{font:900 clamp(3rem,10.5vw,8rem)/.9 var(--display);font-stretch:75%;letter-spacing:-.02em;margin:0 0 1.2rem;max-width:12ch}
+h2{font:800 clamp(1.9rem,4.5vw,2.8rem)/1.05 var(--display);font-stretch:90%;margin:0 0 .6rem;letter-spacing:-.01em}
+h3{font:700 1.15rem var(--body);margin:0 0 .3rem}
+.lede{font-size:clamp(1.1rem,2.2vw,1.35rem);max-width:34em;color:var(--muted);margin:0 0 2rem}
+.btns{display:flex;gap:.8rem;flex-wrap:wrap;margin:0 0 2.5rem}
+.btn{display:inline-block;padding:.65rem 1.2rem;border-radius:6px;font-weight:600;text-decoration:none;border:2px solid var(--text)}
+.btn.main{background:var(--text);color:var(--bg)}
+
+/* Línea de tiempo */
+.tl{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:.9rem .9rem 1rem;overflow:hidden}
+.ruler{margin-left:2.6rem;height:22px;position:relative;font-size:.72rem;color:var(--muted);
+  background:repeating-linear-gradient(90deg,var(--line) 0 1px,transparent 1px 5%) bottom/100% 7px no-repeat}
+.ruler span{position:absolute;top:0;transform:translateX(-50%)}
+.tracks{position:relative}
+.row{display:flex;align-items:center;gap:.6rem;margin-top:.45rem}
+.row i{width:2rem;font:600 .72rem var(--body);font-style:normal;color:var(--muted);flex:none}
+.lane{position:relative;flex:1;height:2.6rem;background:var(--track);border-radius:5px}
+.clip{position:absolute;top:3px;bottom:3px;border-radius:4px;padding:0 .6rem;display:flex;align-items:center;font:600 .82rem var(--body);color:var(--clipink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.playwrap{position:absolute;left:2.6rem;right:0;top:-4px;bottom:0;pointer-events:none}
+.play{position:absolute;top:0;bottom:0;left:0;width:0}
+.play::before{content:"";position:absolute;left:-1px;top:0;bottom:0;width:2px;background:var(--play)}
+.play::after{content:"";position:absolute;left:-6px;top:-2px;border:6px solid transparent;border-top:8px solid var(--play);border-bottom:0}
+.view.on .play{animation:sweep 2.6s cubic-bezier(.65,0,.25,1) .2s forwards}
+@keyframes sweep{to{left:61%}}
+@media (prefers-reduced-motion:reduce){.view.on .play{animation:none;left:61%}}
+
+/* Rejillas */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:1.6rem;margin-top:2rem}
+.card{text-decoration:none;display:block}
+.poster{aspect-ratio:16/9;border-radius:8px;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--a),var(--b));display:flex;align-items:flex-end;padding:.9rem}
+.poster.ph{aspect-ratio:4/5}
+.poster span{position:relative;z-index:1;font:800 1.4rem/1 var(--display);font-stretch:80%;color:#fff;text-shadow:0 1px 12px rgba(0,0,0,.4)}
+.card:hover .poster{outline:3px solid var(--play);outline-offset:3px}
+.card h3{margin-top:.8rem}
+.card p,.muted{margin:0;color:var(--muted);font-size:.95rem}
+
+/* Equipos */
+.gear{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:1.6rem;margin-top:2rem}
+.gear section{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1.2rem 1.3rem}
+.gear ul{margin:.6rem 0 0;padding:0;list-style:none}
+.gear li{padding:.45rem 0;border-top:1px solid var(--line);font-size:.97rem}
+
+/* Precios */
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:1.6rem;margin-top:2rem}
+.plan{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1.5rem;display:flex;flex-direction:column}
+.plan.best{border:2px solid var(--play)}
+.price{font:900 2.6rem/1 var(--display);font-stretch:80%;margin:.8rem 0 1rem}
+.price small{font:500 .9rem var(--body);color:var(--muted)}
+.plan ul{margin:0 0 1.2rem;padding:0 0 0 1.1rem;flex:1}
+.plan li{padding:.15rem 0}
+
+/* Contacto */
+.mail{display:inline-block;font:800 clamp(1.4rem,4vw,2.4rem) var(--display);font-stretch:90%;text-decoration:none;border-bottom:3px solid var(--play);padding-bottom:.1rem;margin-top:.5rem}
+.links{display:flex;gap:1.4rem;margin-top:1.6rem;flex-wrap:wrap}
+footer{padding:2rem 0;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (max-width:720px){.clip{font-size:.7rem;padding:0 .35rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <b id="brand">Angel Rojas Avila</b>
+  <nav aria-label="Índice">
+    <a href="#inicio">Inicio</a><a href="#videos">Videos</a><a href="#fotografia">Fotografía</a><a href="#equipos">Equipos</a><a href="#precios">Paquetes</a><a href="#contacto">Contacto</a>
+  </nav>
+</header>
+
+<main>
+<div class="view" id="inicio">
+  <h1 id="name">Angel Rojas Avila</h1>
+  <p class="lede" id="tagline"></p>
+  <div class="btns"><a class="btn main" href="#videos">Ver videos</a><a class="btn" href="#fotografia">Ver fotografía</a><a class="btn" href="#precios">Ver paquetes</a></div>
+  <div class="tl" role="img" aria-label="Línea de tiempo de edición con mis áreas de trabajo: dirección, fotografía, edición, sonido y color">
+    <div class="ruler"><span style="left:0%">00:00</span><span style="left:25%">00:15</span><span style="left:50%">00:30</span><span style="left:75%">00:45</span><span style="left:98%">01:00</span></div>
+    <div class="tracks">
+      <div class="row"><i>V2</i><div class="lane"><div class="clip" style="left:2%;width:42%;background:var(--c3)">Dirección</div><div class="clip" style="left:46%;width:30%;background:var(--c4)">Motion graphics</div></div></div>
+      <div class="row"><i>V1</i><div class="lane"><div class="clip" style="left:0%;width:34%;background:var(--c1)">Fotografía</div><div class="clip" style="left:35%;width:35%;background:var(--c2)">Edición</div><div class="clip" style="left:71%;width:26%;background:var(--c1)">Color</div></div></div>
+      <div class="row"><i>A1</i><div class="lane"><div class="clip" style="left:6%;width:46%;background:var(--c2)">Diseño sonoro</div><div class="clip" style="left:54%;width:38%;background:var(--c3)">Mezcla</div></div></div>
+      <div class="playwrap" aria-hidden="true"><div class="play"></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="view" id="videos">
+  <h2>Videos</h2>
+  <p class="muted">Una selección de mis trabajos en movimiento.</p>
+  <div class="grid" id="projects"></div>
+</div>
+
+<div class="view" id="fotografia">
+  <h2>Fotografía</h2>
+  <p class="muted">Una selección de mis trabajos en fotografía fija.</p>
+  <div class="grid" id="photos"></div>
+</div>
+
+<div class="view" id="equipos">
+  <h2>Equipos</h2>
+  <p class="muted">Con lo que filmo y fotografío.</p>
+  <div class="gear" id="gear"></div>
+</div>
+
+<div class="view" id="precios">
+  <h2>Paquetes de precios</h2>
+  <p class="muted">Elige un paquete o pídeme una cotización a medida.</p>
+  <div class="plans" id="plans"></div>
+</div>
+
+<div class="view" id="contacto">
+  <h2>Hablemos de tu próximo proyecto</h2>
+  <p class="lede">Cuéntame qué quieres contar, para quién y para cuándo.</p>
+  <a class="mail" id="mail" href="#"></a>
+  <div class="links" id="social"></div>
+</div>
+</main>
+
+<footer>© <span id="yr"></span> Angel Rojas Avila. Todos los derechos reservados.</footer>
+</div>
+
+<script>
+/* Edita solo este bloque con tus datos reales */
+const DATA = {
+  frase: "Filmmaker y fotógrafo. Cuento historias con imagen en movimiento y fotografía.",
+  correo: "hola@tucorreo.com",
+  redes: [
+    { texto: "Portafolio en Canva", url: "https://angelrojasavila.my.canva.site/" },
+    { texto: "Instagram", url: "#" },
+    { texto: "Vimeo", url: "#" }
+  ],
+  proyectos: [
+    { titulo: "Título del video 1", rol: "Dirección y edición", anio: 2026, url: "#", a: "#1F6F78", b: "#0E2A3A" },
+    { titulo: "Título del video 2", rol: "Fotografía y color", anio: 2025, url: "#", a: "#B5476B", b: "#3A1740" },
+    { titulo: "Título del video 3", rol: "Dirección, edición y sonido", anio: 2025, url: "#", a: "#C98A2B", b: "#4A2A12" }
+  ],
+  fotos: [
+    { titulo: "Serie 1", a: "#3D5A80", b: "#1B2A41" }, { titulo: "Serie 2", a: "#9C4F5A", b: "#331820" },
+    { titulo: "Serie 3", a: "#5B7B4A", b: "#1C2B1A" }, { titulo: "Serie 4", a: "#B08A3E", b: "#3A2A10" }
+  ],
+  equipos: [
+    ["Cámara y óptica", ["Sony A7S III", "Lente E-mount FE 28-70mm f3.5-5.6"]],
+    ["Filtros", ["Filtro UV", "K&F Concept 2 en 1 CPL ND 55mm", "Anillos adaptadores up y down 37-82mm", "Tarjeta de balance de blancos gris 2 en 1"]],
+    ["Soporte y accesorios", ["Jaula Andoer con mango superior y zapatas duales", "Magic arm SmallRig", "Abrazadera de cable HDMI"]],
+    ["Energía y almacenamiento", ["Baterías Sony NP-FZ100 y kit de cargador con 2 baterías K&F Concept", "Tarjeta CFexpress Type A Lexar 256 GB Silver", "Funda JJC para tarjetas de memoria", "Bolsa JJC para baterías"]],
+    ["Luz y monitoreo", ["Luz LED Ulanzi VL119 RGB", "Mini luz de relleno RGB", "Monitor Feelworld F6 Plus V2 con estuche y batería NP-F750"]],
+    ["Transporte", ["Mochila para cámaras K&F Concept KF13.140"]]
+  ],
+  moneda: "S/",
+  paquetes: [
+    { nombre: "Fotografía", precio: "000", nota: "por sesión", items: ["Sesión de 2 horas", "20 fotos editadas", "Entrega digital en 5 días"] },
+    { nombre: "Fotografía y video", precio: "000", nota: "por proyecto", destacado: true, items: ["Sesión de foto y video", "30 fotos editadas", "Video de hasta 1 minuto", "Corrección de color y sonido", "Entrega en 7 días"] },
+    { nombre: "Video", precio: "000", nota: "por proyecto", items: ["Rodaje de medio día", "Video de hasta 1 minuto", "Edición y corrección de color", "Entrega en 7 días"] }
+  ]
+};
+
+const $ = id => document.getElementById(id);
+$("tagline").textContent = DATA.frase;
+$("yr").textContent = new Date().getFullYear();
+$("mail").textContent = DATA.correo; $("mail").href = "mailto:" + DATA.correo;
+$("social").innerHTML = DATA.redes.map(r => '<a href="' + r.url + '" target="_blank" rel="noopener">' + r.texto + "</a>").join("");
+$("projects").innerHTML = DATA.proyectos.map(p =>
+  '<a class="card" href="' + p.url + '" target="_blank" rel="noopener"><div class="poster" style="--a:' + p.a + ';--b:' + p.b + '"><span>' + p.titulo + "</span></div><h3>" + p.titulo + "</h3><p>" + p.rol + ", " + p.anio + "</p></a>").join("");
+$("photos").innerHTML = DATA.fotos.map(p =>
+  '<div class="card"><div class="poster ph" style="--a:' + p.a + ';--b:' + p.b + '"><span>' + p.titulo + "</span></div></div>").join("");
+$("gear").innerHTML = DATA.equipos.map(([t, l]) => "<section><h3>" + t + "</h3><ul>" + l.map(i => "<li>" + i + "</li>").join("") + "</ul></section>").join("");
+$("plans").innerHTML = DATA.paquetes.map(p =>
+  '<div class="plan' + (p.destacado ? " best" : "") + '"><h3>' + p.nombre + '</h3><div class="price">' + DATA.moneda + " " + p.precio + " <small>" + p.nota + "</small></div><ul>" +
+  p.items.map(i => "<li>" + i + "</li>").join("") + '</ul><a class="btn' + (p.destacado ? " main" : "") + '" href="#contacto">Pedir este paquete</a></div>').join("");
+
+const VIEWS = ["inicio", "videos", "fotografia", "equipos", "precios", "contacto"];
+function route() {
+  const h = location.hash.slice(1);
+  const v = VIEWS.includes(h) ? h : "inicio";
+  VIEWS.forEach(id => $(id).classList.toggle("on", id === v));
+  document.querySelectorAll("nav a").forEach(a => {
+    if (a.getAttribute("href") === "#" + v) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+  });
+  window.scrollTo(0, 0);
+}
+addEventListener("hashchange", route);
+route();
+</script>
+</body>
+</html>
